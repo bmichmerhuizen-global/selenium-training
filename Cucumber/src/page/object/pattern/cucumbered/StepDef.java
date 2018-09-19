@@ -1,9 +1,5 @@
 package page.object.pattern.cucumbered;
 
-import cucumber.api.java.en.Given;
-import cucumber.api.java.en.When;
-import cucumber.api.java.en.Then;
-
 import static org.junit.Assert.assertTrue;
 
 import java.nio.file.Path;
@@ -12,28 +8,34 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
+import cucumber.api.PendingException;
 import cucumber.api.java.Before;
-import cucumber.api.java.en.And;
-import cucumber.api.java.en.But;
+import cucumber.api.java.en.Given;
+import cucumber.api.java.en.Then;
+import cucumber.api.java.en.When;
 
-public class PoPStepDefinitions {
+public class StepDef {
 	WebDriver driver;
 	String bodyText;
+	Path cashflowBase;
 	
 	@Before
 	public void setUp() throws Throwable {
 		Path path = java.nio.file.Paths.get("src/logs.txt");
 		System.setProperty("webdriver.gecko.driver", "C:\\\\Selenium\\geckodriver.exe");
 		System.setProperty(FirefoxDriver.SystemProperty.DRIVER_USE_MARIONETTE,"true");
-		//System.setProperty(FirefoxDriver.SystemProperty.BROWSER_LOGFILE,path.toString());
+		System.setProperty(FirefoxDriver.SystemProperty.BROWSER_LOGFILE,path.toString());
 		driver = new FirefoxDriver();
+		cashflowBase = java.nio.file.Paths.get("resources/CashFlow");
 	}
-
+	
 	@Given("^the user is at the calculator$")
 	public void atCalculator() throws Throwable {
-		driver.get("file:///C:/CashFlow/index.html");
+		Path calculator = cashflowBase.resolve("index.html");
+		driver.get(calculator.toUri().toString());
 		driver.findElement(By.cssSelector("a[href*='calc'")).click();
 	}
+	
 	@When("^the user enters (\\d+) for income$")
 	public void setIncome(int income) throws Throwable {
 		driver.findElement(By.id("income")).sendKeys(Integer.toString(income));
@@ -57,5 +59,29 @@ public class PoPStepDefinitions {
 	@Then("^gives a maximum limit of (\\d+)$")
 	public void getLimit(int limit) throws Throwable {
 		assertTrue(this.bodyText.contains("$"+Integer.toString(limit)));
+	}
+	
+	@Then("^the page title is \"([^\"]*)\"$")
+	public void the_page_title_is(String arg1) throws Throwable {
+	    // Write code here that turns the phrase above into concrete actions
+	    assertTrue("un-expected page title", driver.getTitle().equals(arg1));
+	}
+
+	@Given("^the user is at the \"([^\"]*)\" page$")
+	public void the_user_is_at_the_page(String arg1) throws Throwable {
+		Path calculator = cashflowBase.resolve("index.html");
+		driver.get(calculator.toUri().toString());
+		driver.findElement(By.xpath("//*[@id=\"navlist\"]/li/a[contains(text(),\""+arg1+"\")]")).click();
+	}
+
+	@Then("^the page contains \"([^\"]*)\"$")
+	public void the_page_contains(String arg1) throws Throwable {
+	    // Write code here that turns the phrase above into concrete actions
+		this.bodyText = driver.findElement(By.tagName("body")).getText();
+	     assertTrue(this.bodyText.contains(arg1));
+	}
+	@When("^the user clicks the \"([^\"]*)\" link$")
+	public void the_user_clicks_the_link(String arg1) throws Throwable {
+		driver.findElement(By.xpath("//*[@id=\"navlist\"]/li/a[contains(text(),\""+arg1+"\")]")).click();
 	}
 }
