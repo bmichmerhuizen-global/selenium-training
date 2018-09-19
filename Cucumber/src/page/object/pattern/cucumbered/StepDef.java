@@ -9,6 +9,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
 import cucumber.api.PendingException;
+import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
@@ -28,6 +29,11 @@ public class StepDef {
 		driver = new FirefoxDriver();
 		cashflowBase = java.nio.file.Paths.get("resources/CashFlow");
 	}
+	@After
+	public void tearDown() throws Throwable{
+		driver.close();
+	}
+	
 	
 	@Given("^the user is at the calculator$")
 	public void atCalculator() throws Throwable {
