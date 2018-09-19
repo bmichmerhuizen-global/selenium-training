@@ -1,0 +1,97 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+ <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+ 
+
+  <title>Your Results</title>
+  <link href="style.css" rel="stylesheet" type="text/css" />
+ <script type="text/javascript">
+  function OnSubmitForm(){     
+      var target = "404.html";
+      var income = document.getElementById('income').value ;
+      var credit = document.getElementById('credit').value ;
+      var emp = document.getElementById('employment').value ;
+     
+      if (income == '49999') { 
+         target ="income.html";    
+      }
+      else if (credit == '749') { 
+         target ="credit.html";    
+      }  
+      else if (emp == '179') { 
+         target ="emp.html";    
+      }     
+      else if ((income == '50000') && (credit == '750') && (emp == '180')) {
+          target ="good.html";   
+      }
+    document.f1.action = target;
+  
+  return true;
+}
+  </script>
+</head>
+
+
+<body>
+
+<div id="contain">
+  <div id="header">
+    <h1 class="style7">CashFlow</h1>
+  </div>
+
+  <div id="leftcol">
+    <h3>Links</h3>
+
+    <div id="navcontainer">
+       <ul id="navlist">
+	  <li><a href="" >Home</a></li>
+	  <li><a href="" >About Us</a></li>
+ 	  <li><a href="" >News</a></li>
+	  <li><a href="" >Contact Us</a></li>
+	  <li><a href="" >Links</a></li>
+        </ul> 
+    </div>
+
+  </div>
+
+  <div id="content">
+   <h4> Line of Credit Calculator</h4>
+<div id="login_form">
+    <form name="f1" method="post" action="#" id="f1" onsubmit="return OnSubmitForm();">
+        <table>
+            <tr>
+                <td class="f1_label">Yearly Income :</td><td><input type="text" id="income" name ="income" value="" />
+                </td>
+            </tr>
+            <tr>
+                <td class="f1_label">Credit Rating  :</td><td><input type="text" id="credit" value=""  />
+                </td>
+            </tr>
+              <td class="f1_label">Days Employed  :</td><td><input type="text" id="employment" value=""  />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="submit" name="Calc" value="Do Me!" style="font-size:18px; "  />
+                </td>
+            </tr>
+        </table>
+    </form> 
+</div>
+  </div>
+
+  <div id="footer">
+    <p class="style5 style6">Copyright  2005 | All Rights Reserved  </p>
+  </div>
+</div>
+
+
+
+
+
+</body>
+</html>
