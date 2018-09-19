@@ -3,6 +3,7 @@ package features;
 import static org.junit.Assert.assertTrue;
 
 import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -18,20 +19,30 @@ public class StepDefs {
 
 	WebDriver driver;
 	String bodyText;
+	Path cashflowBase;
 
 	@Before
 	public void setUp() throws Throwable {
 		Path path = java.nio.file.Paths.get("src/logs.txt");
-		System.setProperty("webdriver.gecko.driver", "C:\\\\Selenium\\geckodriver.exe");
+		 
+		
+		System.setProperty("webdriver.gecko.driver", Paths.get("resources", "exes","geckodriver.exe").toUri().toString());
+		
+		System.setProperty("webdriver.chrome.driver", Paths.get("resources", "exes","chromedriver.exe").toUri().toString());
+		
+		System.setProperty("webdriver.IE.driver", Paths.get("resources", "exes","IEDriverServer.exe").toUri().toString());
 		System.setProperty(FirefoxDriver.SystemProperty.DRIVER_USE_MARIONETTE,"true");
-		//System.setProperty(FirefoxDriver.SystemProperty.BROWSER_LOGFILE,path.toString());
+		System.setProperty(FirefoxDriver.SystemProperty.BROWSER_LOGFILE,path.toString());
 		driver = new FirefoxDriver();
+		cashflowBase = java.nio.file.Paths.get("resources/CashFlow");
 		
 	}
 
+
 	@Given("^the user is at the calculator$")
 	public void atCalculator() throws Throwable {
-		driver.get("file:///C:/CashFlow/index.html");
+		Path calculator = cashflowBase.resolve("index.html");
+		driver.get(calculator.toUri().toString());
 		driver.findElement(By.cssSelector("a[href*='calc'")).click();
 	}
 
