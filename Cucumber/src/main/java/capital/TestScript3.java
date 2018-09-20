@@ -5,33 +5,32 @@ package capital;
 
 import static org.junit.Assert.assertTrue;
 
+import java.net.URL;
 import java.nio.file.Path;
 import java.util.concurrent.TimeUnit;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
 /**
  * @author Administrator
  *
  */
-public class TestScript2 {
+public class TestScript3 {
 
 	/**
 	 * @param args
 	 */
 	public static void main(String[] args) {
 		
-		Path path = java.nio.file.Paths.get("src/test1.html");
+		URL path = TestScript.class.getClassLoader().getResource("command.set.II.html");
+		URL resource = TestScript.class.getClassLoader().getResource("exes/geckodriver.exe");
 		
-		System.setProperty("webdriver.gecko.driver", "C:\\Selenium\\geckodriver.exe");
+		System.setProperty("webdriver.gecko.driver", resource.getPath().toString());
 		// TODO Auto-generated method stub
 		WebDriver driver = new FirefoxDriver();
-driver.manage().timeouts().pageLoadTimeout(5, TimeUnit.SECONDS);
-		driver.get(path.toUri().toString());
+		driver.manage().timeouts().pageLoadTimeout(5, TimeUnit.SECONDS);
+		driver.get(path.toString());
 		String homePage = driver.getCurrentUrl();
 		System.out.println("title:\t" + driver.getTitle());
 		driver.navigate().to("http://www.capitalone.com");

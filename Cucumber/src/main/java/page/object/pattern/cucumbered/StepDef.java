@@ -2,14 +2,14 @@ package page.object.pattern.cucumbered;
 
 import static org.junit.Assert.assertTrue;
 
+import java.net.URL;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
-import cucumber.api.PendingException;
+import capital.TestScript;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.Given;
@@ -23,18 +23,10 @@ public class StepDef {
 	
 	@Before
 	public void setUp() throws Throwable {
-		Path path = java.nio.file.Paths.get("src/logs.txt");
-		 
-		
-		System.setProperty("webdriver.gecko.driver", Paths.get("resources", "exes","geckodriver.exe").toString());
-		
-		System.setProperty("webdriver.chrome.driver", Paths.get("resources", "exes","chromedriver.exe").toString());
-		
-		System.setProperty("webdriver.IE.driver", Paths.get("resources", "exes","IEDriverServer.exe").toString());
-		System.setProperty(FirefoxDriver.SystemProperty.DRIVER_USE_MARIONETTE,"true");
-		System.setProperty(FirefoxDriver.SystemProperty.BROWSER_LOGFILE,path.toString());
+		cashflowBase = java.nio.file.Paths.get(TestScript.class.getClassLoader().getResource("CashFlow").toURI());
+		URL resource = TestScript.class.getClassLoader().getResource("exes/geckodriver.exe");
+		System.setProperty("webdriver.gecko.driver", resource.getPath().toString());		
 		driver = new FirefoxDriver();
-		cashflowBase = java.nio.file.Paths.get("resources/CashFlow");
 		
 	}
 	@After

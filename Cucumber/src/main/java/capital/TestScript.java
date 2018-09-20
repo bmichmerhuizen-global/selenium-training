@@ -3,12 +3,10 @@
  */
 package capital;
 
-import java.nio.file.Path;
+import java.net.URISyntaxException;
+import java.net.URL;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
 /**
@@ -19,15 +17,17 @@ public class TestScript {
 
 	/**
 	 * @param args
+	 * @throws URISyntaxException 
 	 */
-	public static void main(String[] args) {
+	public static void main(String[] args) throws URISyntaxException {
 		
-		Path path = java.nio.file.Paths.get("src/test1.html");
+		URL path = TestScript.class.getClassLoader().getResource("test1.html");
+		URL resource = TestScript.class.getClassLoader().getResource("exes/geckodriver.exe");
 		
-		System.setProperty("webdriver.gecko.driver", "C:\\Selenium\\geckodriver.exe");
+		System.setProperty("webdriver.gecko.driver", resource.getPath().toString());
 		// TODO Auto-generated method stub
 		WebDriver driver = new FirefoxDriver();
-		driver.get(path.toUri().toString());
+		driver.get(path.toString());
 		
 		System.out.println("title:\t" + driver.getTitle());
 		System.out.println("page url:"+driver.getCurrentUrl());
