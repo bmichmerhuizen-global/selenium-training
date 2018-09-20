@@ -6,7 +6,6 @@ package capital;
 import static org.junit.Assert.assertTrue;
 
 import java.net.URL;
-import java.nio.file.Path;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.WebDriver;

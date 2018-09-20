@@ -2,15 +2,17 @@ package page.object.pattern;
 
 import static org.junit.Assert.assertTrue;
 
+import java.net.URL;
+
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
-import org.junit.Ignore;
 import org.junit.Test;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+
+import capital.TestScript;
 
 public class POPTest {
 	static WebDriver driver;
@@ -20,7 +22,8 @@ public class POPTest {
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
-		System.setProperty("webdriver.gecko.driver", "C:\\\\Selenium\\geckodriver.exe");
+		URL resource = TestScript.class.getClassLoader().getResource("exes/geckodriver.exe");
+		System.setProperty("webdriver.gecko.driver", resource.getPath().toString());		
 		driver = new FirefoxDriver();
 	}
 
