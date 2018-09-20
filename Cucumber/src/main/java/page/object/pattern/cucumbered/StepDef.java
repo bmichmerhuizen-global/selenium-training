@@ -15,11 +15,15 @@ import cucumber.api.java.Before;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import cucumber.runtime.CucumberException;
 
 public class StepDef {
 	WebDriver driver;
 	String bodyText;
 	Path cashflowBase;
+	private CalcPage calcPage = null;
+	private HomePage homePage = null;
+	private ResultPage resultPage = null;
 	
 	@Before
 	public void setUp() throws Throwable {
@@ -37,34 +41,35 @@ public class StepDef {
 	
 	@Given("^the user is at the calculator$")
 	public void atCalculator() throws Throwable {
-		Path calculator = cashflowBase.resolve("index.html");
-		driver.get(calculator.toUri().toString());
-		driver.findElement(By.cssSelector("a[href*='calc'")).click();
+		homePage = new HomePage(driver);
+		calcPage = homePage.getCalc();
 	}
 	
 	@When("^the user enters (\\d+) for income$")
 	public void setIncome(int income) throws Throwable {
-		driver.findElement(By.id("income")).sendKeys(Integer.toString(income));
+		calcPage.setIncome(income);
 	}
 
 	@When("^enters (\\d+) for credit rating$")
 	public void setCredit(int credit) throws Throwable {
-		driver.findElement(By.id("credit")).sendKeys(Integer.toString(credit));
+		calcPage.setCredit(credit);
 	}
 
 	@When("^enters (\\d+) for days of employment$")
 	public void setEmployment(int emp) throws Throwable {
-		driver.findElement(By.id("employment")).sendKeys(Integer.toString(emp));
+		calcPage.setEmployment(emp);
 	}
 	@Then("^the calculator provides the message \"([^\"]*)\"$")
 	public void getMessage(String message) throws Throwable {
-		 driver.findElement(By.name("Calc")).click();
-	     this.bodyText = driver.findElement(By.tagName("body")).getText();
-	     assertTrue(this.bodyText.contains(message));
+		 resultPage  = calcPage.submit();
+	     
+	     assertTrue(resultPage.hasString(message));
 	}
 	@Then("^gives a maximum limit of (\\d+)$")
 	public void getLimit(int limit) throws Throwable {
-		assertTrue(this.bodyText.contains("$"+Integer.toString(limit)));
+		if(resultPage == null) throw new CucumberException("improper page access");
+		
+		assertTrue(resultPage.hasString("$"+Integer.toString(limit)));
 	}
 	
 	@Then("^the page title is \"([^\"]*)\"$")
