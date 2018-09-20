@@ -21,8 +21,7 @@ public class TestPage1 {
 		WebDriver driver = new FirefoxDriver();
 		driver.get(path.toString());
 
-		// Open Webpage
-		driver.get(path.toString());
+		
 
 		WebElement para = driver.findElement(By.tagName("p"));
 		WebElement input1 = driver.findElement(By.name("firstname"));
